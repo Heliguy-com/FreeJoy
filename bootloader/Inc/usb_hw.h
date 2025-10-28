@@ -50,13 +50,40 @@
 
 extern volatile bool flash_started;
 extern volatile bool flash_finished;
+#define FLASHSIZE_BASE                                ((uint32_t)0x1FFFF7E0)
+
 
 /* Exported define -----------------------------------------------------------*/
 
-#define FIRMWARE_START_PAGE				8
-#define MAX_PAGE						64
-#define FLASH_PAGE_SIZE					1024
-#define FIRMWARE_COPY_ADDR				(0x8000000 + (FLASH_PAGE_SIZE*FIRMWARE_START_PAGE))
+static inline uint32_t BootloaderFlashSizeKilobytes(void)
+{
+    return *(volatile uint16_t*)FLASHSIZE_BASE;
+}
+
+static inline uint32_t BootloaderFlashPageSize(void)
+{
+    return (BootloaderFlashSizeKilobytes() > 128U) ? 2048U : 1024U;
+}
+
+static inline uint32_t BootloaderMaxPageCount(void)
+{
+    return (BootloaderFlashSizeKilobytes() * 1024U) / BootloaderFlashPageSize();
+}
+
+static inline uint32_t BootloaderFirmwareStartPage(void)
+{
+    return (BootloaderFlashPageSize() == 2048U) ? 4U : 8U;
+}
+
+static inline uint32_t BootloaderFirmwareCopyAddress(void)
+{
+    return FLASH_BASE + BootloaderFlashPageSize() * BootloaderFirmwareStartPage();
+}
+
+#define FLASH_PAGE_SIZE				BootloaderFlashPageSize()
+#define MAX_PAGE					BootloaderMaxPageCount()
+#define FIRMWARE_START_PAGE				BootloaderFirmwareStartPage()
+#define FIRMWARE_COPY_ADDR				BootloaderFirmwareCopyAddress()
 
 /* Exported functions ------------------------------------------------------- */
 

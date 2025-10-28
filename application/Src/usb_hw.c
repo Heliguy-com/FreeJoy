@@ -429,11 +429,11 @@ void USB_HW_Init(void)
 {
 	Set_System();
 
-  USB_Interrupts_Config();
+	USB_Interrupts_Config();
 
-  Set_USBClock();
+	Set_USBClock();
 
-  USB_Init();
+	USB_Init();
 	
 }
 

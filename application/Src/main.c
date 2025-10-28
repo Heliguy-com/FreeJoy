@@ -99,9 +99,9 @@ int main(void)
 
 	Delay_ms(100);
 
-	USB_OrientationDetect_Init();
-	PowerControlPin_Init();
-	Power_LatchOn();
+	//USB_OrientationDetect_Init();
+	//PowerControlPin_Init();
+	//Power_LatchOn();
 	uint16_t powerOffDelayCounter = 0;
 	power_button_event_t pwr_event = PWR_BTN_EVENT_NONE;
 	uint16_t timer = 0;
@@ -133,9 +133,9 @@ int main(void)
 		timer--;
 #endif // DEBUG
 
-		(powerOffDelayCounter >= PWR_OFF_DELAY_MS) ? (powerOffDelayCounter = PWR_OFF_DELAY_MS + 1) : (powerOffDelayCounter+=3);
+		//(powerOffDelayCounter >= PWR_OFF_DELAY_MS) ? (powerOffDelayCounter = PWR_OFF_DELAY_MS + 1) : (powerOffDelayCounter+=3);
 	
-		CheckPowerState((power_button_event_tTest*) & pwr_event, powerOffDelayCounter);
+		//CheckPowerState((power_button_event_tTest*) & pwr_event, powerOffDelayCounter);
 
 		ButtonsDebounceProcess(&dev_config);
 		ButtonsReadLogical(&dev_config);
@@ -191,24 +191,24 @@ static void LED_Init(void)
 {
 	// Power output control testing
 	SET_BIT(RCC->APB2ENR, RCC_APB2ENR_IOPCEN); // Enable GPIOC clock
-	/* PC13 as output */
-	GPIOC->CRH &= ~(GPIO_CRH_MODE13 | GPIO_CRH_CNF13);    /* Clear MODE13 and CNF13 fields */
-	GPIOC->CRH |= GPIO_CRH_MODE13_1 | GPIO_CRH_MODE13_0;  /* Set MODE13 to 3 (Output) */
+	/* PC6 as output */
+	GPIOC->CRL &= ~(GPIO_CRL_MODE6 | GPIO_CRL_CNF6);    /* Clear MODE6 and CNF6 fields */
+	GPIOC->CRL |= GPIO_CRL_MODE6_1 | GPIO_CRL_MODE6_0;  /* Set MODE6 to 3 (Output) */
 
 }
 static void LED_Toggle(void) 
 {
-    GPIOC->ODR ^= GPIO_ODR_ODR13;
+    GPIOC->ODR ^= GPIO_ODR_ODR6;
 }
 
 static void LED_Off(void) 
 {
-    GPIOC->ODR &= ~(GPIO_ODR_ODR13);
+    GPIOC->ODR &= ~(GPIO_ODR_ODR6);
 }
 
 static void LED_On(void) 
 {
-    GPIOC->ODR |= (GPIO_ODR_ODR13);
+    GPIOC->ODR |= (GPIO_ODR_ODR6);
 }
 #endif // DEBUG
 

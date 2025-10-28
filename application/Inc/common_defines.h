@@ -9,6 +9,8 @@
 #ifndef __COMMON_DEFINES_H__
 #define __COMMON_DEFINES_H__
 
+#define FLASHSIZE_BASE                                ((uint32_t)0x1FFFF7E0)
+
 //#define DEBUG
 
 #define FIRMWARE_VERSION					0x1713			// v1.7.1b2
@@ -25,7 +27,9 @@
 #define AXIS_CENTER_VALUE					(AXIS_MIN_VALUE + (AXIS_MAX_VALUE-AXIS_MIN_VALUE)/2)
 #define AXIS_FULLSCALE						(AXIS_MAX_VALUE - AXIS_MIN_VALUE + 1)
 
-#define CONFIG_ADDR								(0x0800FC00)
+#define FREEJOY_FLASH_SIZE_KB				(*(volatile uint16_t *)FLASHSIZE_BASE)
+#define FREEJOY_FLASH_PAGE_SIZE			((FREEJOY_FLASH_SIZE_KB > 128U) ? 2048U : 1024U)
+#define CONFIG_ADDR						(FLASH_BASE + (FREEJOY_FLASH_SIZE_KB * 1024U) - FREEJOY_FLASH_PAGE_SIZE)
 
 
 enum

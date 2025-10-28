@@ -23,7 +23,27 @@ static const dev_config_t init_config =
 	/* 
 		Name of device in devices dispatcher
 	*/
-	.device_name[0] =  'B',
+		.device_name[0] = 'F',
+	.device_name[1] = 'r',
+	.device_name[2] = 'e',
+	.device_name[3] = 'e',
+	.device_name[4] = 'J',
+	.device_name[5] = 'o',
+	.device_name[6] = 'y',
+	.device_name[7] = ' ',
+	.device_name[8] = 'v',
+	.device_name[9] = '1',
+	.device_name[10] = '.',
+	.device_name[11] = '7',
+	.device_name[12] = '.',
+	.device_name[13] = '1',
+	.device_name[14] = 0,
+	.device_name[15] = 0,
+	.device_name[16] = 0,
+	.device_name[17] = 0,
+	.device_name[18] = 0,
+	.device_name[19] = 0,
+/*	.device_name[0] =  'B',
 	.device_name[1] =  'r',
 	.device_name[2] =  'e',
 	.device_name[3] =  'a',
@@ -42,7 +62,7 @@ static const dev_config_t init_config =
 	.device_name[16] = 'I',
 	.device_name[17] = 'T',
 	.device_name[18] = 0,
-	.device_name[19] = 0,			
+	.device_name[19] = 0,	*/		
 	
 	.vid = 0x0483,										// ST
 	.pid = 0x5757,										

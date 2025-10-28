@@ -98,8 +98,9 @@ void EP1_OUT_Callback(void)
 			{
 				firmware_len = hid_buf[5]<<8 | hid_buf[4];
 				crc_in = hid_buf[7]<<8 | hid_buf[6];
-				
-				if (firmware_len <= 0xE000)	// check new firmware size, 56kB max
+
+				uint32_t firmware_max_size = (MAX_PAGE - FIRMWARE_START_PAGE) * FLASH_PAGE_SIZE;
+				if ((uint32_t)firmware_len <= firmware_max_size)	// check new firmware size fits available flash
 				{
 					flash_started = 1;
 					
