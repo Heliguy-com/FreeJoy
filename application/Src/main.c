@@ -145,7 +145,6 @@ int main(void)
 		AnalogGet(NULL, tmp, NULL);
 		PWM_SetFromAxis(&dev_config, tmp);
 	/*
-		
 		// Enter flasher command received
 	*/
 		if (bootloader > 0)

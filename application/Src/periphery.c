@@ -50,36 +50,36 @@ volatile uint32_t TimingDelay;
 
 pin_config_t pin_config[USED_PINS_NUM] =
         {
-                {GPIOA, GPIO_Pin_0,  0},                    // 0
-                {GPIOA, GPIO_Pin_1,  1},                    // 1
-                {GPIOA, GPIO_Pin_2,  2},                    // 2
-                {GPIOA, GPIO_Pin_3,  3},                    // 3
-                {GPIOA, GPIO_Pin_4,  4},                    // 4
-                {GPIOA, GPIO_Pin_5,  5},                    // 5
-                {GPIOA, GPIO_Pin_6,  6},                    // 6
-                {GPIOA, GPIO_Pin_7,  7},                    // 7
-                {GPIOA, GPIO_Pin_8,  8},                    // 8
-                {GPIOA, GPIO_Pin_9,  9},                    // 9
-                {GPIOA, GPIO_Pin_10, 10},                // 10
-                {GPIOA, GPIO_Pin_15, 15},                // 11
-                {GPIOB, GPIO_Pin_0,  0},                    // 12
-                {GPIOB, GPIO_Pin_1,  1},                    // 13
-                {GPIOB, GPIO_Pin_3,  3},                    // 14
-                {GPIOB, GPIO_Pin_4,  4},                    // 15
-                {GPIOB, GPIO_Pin_5,  5},                    // 16
-                {GPIOB, GPIO_Pin_6,  6},                    // 17
-                {GPIOB, GPIO_Pin_7,  7},                    // 18
-                {GPIOB, GPIO_Pin_8,  8},                    // 19
-                {GPIOB, GPIO_Pin_9,  9},                    // 20
-                {GPIOB, GPIO_Pin_10, 10},                // 21
-                {GPIOB, GPIO_Pin_11, 11},                // 22
-                {GPIOB, GPIO_Pin_12, 12},                // 23
-                {GPIOB, GPIO_Pin_13, 13},                // 24
-                {GPIOB, GPIO_Pin_14, 14},                // 25
-                {GPIOB, GPIO_Pin_15, 15},                // 26
-                {GPIOC, GPIO_Pin_13, 13},                // 27
-                {GPIOC, GPIO_Pin_14, 14},                // 28
-                {GPIOC, GPIO_Pin_15, 15},                // 29
+                {GPIOA, GPIO_Pin_0,  0},                    // 0	JS_R_AxRz
+                {GPIOA, GPIO_Pin_1,  1},                    // 1	JS_R_AxRy
+                {GPIOA, GPIO_Pin_2,  2},                    // 2	GIM_R_AxY
+                {GPIOA, GPIO_Pin_3,  3},                    // 3	GIM_L_AxX
+                {GPIOA, GPIO_Pin_4,  4},                    // 4	JS_R_AxRx
+                {GPIOA, GPIO_Pin_5,  5},                    // 5	JS_R_AxZ
+                {GPIOA, GPIO_Pin_6,  6},                    // 6	JS_L_AxY
+                {GPIOA, GPIO_Pin_7,  7},                    // 7	JS_L_AxX
+                {GPIOA, GPIO_Pin_8,  8},                    // 8	SW_L_BK
+                {GPIOA, GPIO_Pin_9,  9},                    // 9	SW_L_RK2
+                {GPIOA, GPIO_Pin_10, 10},					// 10		NOTHING
+                {GPIOA, GPIO_Pin_15, 15},					// 11	SW_L_RK1
+                {GPIOB, GPIO_Pin_0,  0},                    // 12	SW_L_S1 (PWR_SW)
+                {GPIOB, GPIO_Pin_1,  1},                    // 13	SW_L_S2
+                {GPIOB, GPIO_Pin_3,  3},                    // 14	SW_L_S3
+                {GPIOB, GPIO_Pin_4,  4},                    // 15	SW_L_S4
+                {GPIOB, GPIO_Pin_5,  5},                    // 16	SW_L_S5
+                {GPIOB, GPIO_Pin_6,  6},                    // 17	SW_R_S1
+                {GPIOB, GPIO_Pin_7,  7},                    // 18	SW_R_S2
+                {GPIOB, GPIO_Pin_8,  8},                    // 19	SW_R_S3
+                {GPIOB, GPIO_Pin_9,  9},                    // 20	SW_R_S4
+                {GPIOB, GPIO_Pin_10, 10},					// 21	I2C
+                {GPIOB, GPIO_Pin_11, 11},					// 22	I2C
+                {GPIOB, GPIO_Pin_12, 12},					// 23	SW_R_S5
+                {GPIOB, GPIO_Pin_13, 13},					// 24	SW_R_TR
+                {GPIOB, GPIO_Pin_14, 14},					// 25	SW_R_BK
+                {GPIOB, GPIO_Pin_15, 15},					// 26	SW_L_TR
+                {GPIOC, GPIO_Pin_13, 13},					// 27	.X
+                {GPIOC, GPIO_Pin_14, 14},					// 28	.B
+                {GPIOC, GPIO_Pin_15, 15},					// 29	.A
         };
 
 
@@ -352,140 +352,23 @@ void IO_Init (dev_config_t * p_dev_config)
 	GPIOC->CRH=0x44444444;
 	GPIOC->ODR=0x0;
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-
-	// SW_L_S1 (PWR_SW)
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_L_S2
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_L_S3
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_L_S4
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_L_S5
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_R_S1
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_R_S2
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_R_S3
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_R_S4
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_R_S5
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_L_TR
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_R_BK
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_R_TR
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	// SW_L_BK
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-	// SW_L_RK1
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-	// SW_L_RK2
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-	// SW_L_A
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-	// SW_L_B
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-	// SW_L_X
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-
-	/*
-	// setting up GPIO according confgiguration
+	// setting up GPIO according configuration
 	for (int i=0; i<USED_PINS_NUM; i++)
 	{
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 		// buttons
 		if (p_dev_config->pins[i] == BUTTON_GND)
 		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
 			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
 			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
 		}
 		else if (p_dev_config->pins[i] == BUTTON_VCC)
 		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
 			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
@@ -511,29 +394,6 @@ void IO_Init (dev_config_t * p_dev_config)
 			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
 			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
 		}
-		else if (p_dev_config->pins[i] == SPI_SCK && i == 14)		// PB3
-		{
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;	
-			GPIO_Init (GPIOB,&GPIO_InitStructure);			
-		}
-		else if (p_dev_config->pins[i] == SPI_MISO && i == 15)			// PB4
-		{		
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-			GPIO_Init (GPIOB,&GPIO_InitStructure);
-		}
-		else if (p_dev_config->pins[i] == SPI_MOSI && i == 16)			// PB5
-		{		
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;						// PP or OD?
-			GPIO_Init (GPIOB,&GPIO_InitStructure);
-
-			SPI_Start();
-		}
 		else if (p_dev_config->pins[i] == I2C_SCL && i == 21)			// PB10
 		{
 			I2C_Start();
@@ -550,86 +410,6 @@ void IO_Init (dev_config_t * p_dev_config)
 			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;						
 			GPIO_Init (GPIOB,&GPIO_InitStructure);
 		}
-		else if (p_dev_config->pins[i] == TLE5011_CS || 
-						 p_dev_config->pins[i] == TLE5012_CS ||
-						 p_dev_config->pins[i] == MCP3201_CS ||
-						 p_dev_config->pins[i] == MCP3202_CS ||
-						 p_dev_config->pins[i] == MCP3204_CS ||
-						 p_dev_config->pins[i] == MCP3208_CS ||
-						 p_dev_config->pins[i] == MLX90363_CS ||
-						 p_dev_config->pins[i] == MLX90393_CS ||
-						 p_dev_config->pins[i] == AS5048A_CS)
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-			GPIO_WriteBit(pin_config[i].port, pin_config[i].pin, Bit_SET);
-		}
-		else if (p_dev_config->pins[i] == TLE5011_GEN  && i == 17)
-		{
-			Generator_Init();	// 4MHz output at PB6 pin
-		}
-		else if (p_dev_config->pins[i] == SHIFT_REG_CLK)
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-			GPIO_WriteBit(pin_config[i].port, pin_config[i].pin, Bit_RESET);
-		}
-		else if (p_dev_config->pins[i] == SHIFT_REG_LATCH)
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-			GPIO_WriteBit(pin_config[i].port, pin_config[i].pin, Bit_SET);
-		}
-		else if (p_dev_config->pins[i] == SHIFT_REG_DATA)
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-		}
-		else if (p_dev_config->pins[i] == LED_PWM)
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-		}
-		else if (p_dev_config->pins[i] == LED_SINGLE)
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-		}
-		else if (p_dev_config->pins[i] == LED_ROW)
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-			pin_config[i].port->ODR &=  ~pin_config[i].pin;
-		}
-		else if (p_dev_config->pins[i] == LED_COLUMN)
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-			pin_config[i].port->ODR |=  pin_config[i].pin;
-		}
-		else if (p_dev_config->pins[i] == FAST_ENCODER && (i == 8 || i == 9))		// PA8 or PA9
-		{
-			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-			GPIO_InitStructure.GPIO_Pin = pin_config[i].pin;
-			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
-		}
 		else if (p_dev_config->pins[i] == NOT_USED)
 		{
 			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
@@ -638,7 +418,7 @@ void IO_Init (dev_config_t * p_dev_config)
 			GPIO_Init(pin_config[i].port, &GPIO_InitStructure);
 		}
 	}
-	*/
+	
 #ifdef DEBUG
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
